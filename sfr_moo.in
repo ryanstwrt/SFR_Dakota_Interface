@@ -1,0 +1,37 @@
+# DAKOTA INPUT FILE - sfr_moo.in
+environment
+  tabular_data
+    tabular_data_file = 'sfr_moo.dat'
+method
+  moga
+    seed = 10983
+#  max_function_evaluations = 2500
+  max_function_evaluations = 500
+  initialization_type unique_random
+  crossover_type shuffle_random
+    num_offspring = 2 num_parents = 2
+    crossover_rate = 0.8
+  mutation_type replace_uniform
+    mutation_rate = 0.1
+  fitness_type domination_count
+  replacement_type below_limit = 6
+    shrinkage_fraction = 0.9
+  convergence_type metric_tracker
+    percent_change = 0.05 num_generations = 40
+  final_solutions = 5
+  output silent
+variables
+  continuous_design = 2
+    initial_point 65         65   
+    upper_bounds  70         70     
+    lower_bounds  50         50      
+    descriptors   'height' 'smear'
+interface
+  fork
+  analysis_drivers = 'python.exe sfr_ga_di.py'
+responses
+  descriptors 'keff' 'void_coeff' 'doppler_coeff'
+  objective_functions = 3
+#  weights = 0.5 0.2 0.3 
+  no_gradients
+  no_hessians
